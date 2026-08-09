@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     app_name: str = "AI Assistant"
     environment: str = "development"
     debug: bool = True
+    log_level: str = "INFO"
 
     model_config = SettingsConfigDict(
         env_file=".env",

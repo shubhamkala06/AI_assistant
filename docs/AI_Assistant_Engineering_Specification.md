@@ -333,13 +333,28 @@ Use **Pydantic Settings**.
 
 ## Observability
 
-Use:
+Observability consists of distinct subsystems with different responsibilities.
 
--   Python logging
--   LangSmith
--   Centralized exception handling
+### Application Logging
 
-Tracing should primarily rely on LangSmith.
+- Structured logging using `structlog`.
+- Human-readable console output in development.
+- JSON output in production.
+
+### Audit Logging
+
+- Persistent audit records stored in PostgreSQL.
+- Business events only.
+- Not implemented through the application logger.
+
+### AI Tracing
+
+- LangSmith for LLM, tool, graph, and prompt execution.
+- Independent from application logging.
+
+### Infrastructure Logging
+
+- Uvicorn, SQLAlchemy, Redis, ARQ, and other runtime components integrate into the application's logging configuration.
 
 ## Testing
 
