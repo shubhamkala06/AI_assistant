@@ -8,3 +8,11 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Ruff 
+.ruff_cache
+
+# Ignore all user-specific VS Code files but DO track the shared settings file
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
