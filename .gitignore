@@ -16,3 +16,6 @@ wheels/
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
+
+# Environment Variables
+.env
