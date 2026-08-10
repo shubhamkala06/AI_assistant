@@ -18,7 +18,7 @@ def configure_logging(settings: Settings) -> None:
 
     renderer = (
         structlog.dev.ConsoleRenderer()
-        if settings.environment == "development"
+        if settings.app.environment == "development"
         else structlog.processors.JSONRenderer()
     )
 
@@ -36,7 +36,7 @@ def configure_logging(settings: Settings) -> None:
     root_logger = logging.getLogger()
     root_logger.handlers.clear()
     root_logger.addHandler(handler)
-    root_logger.setLevel(settings.log_level)
+    root_logger.setLevel(settings.logging.log_level)
 
     structlog.configure(
         processors=[

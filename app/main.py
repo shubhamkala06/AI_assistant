@@ -11,8 +11,8 @@ settings = get_settings()
 configure_logging(settings)
 
 app = FastAPI(
-    title=settings.app_name,
-    debug=settings.debug,
+    title=settings.app.app_name,
+    debug=settings.app.debug,
     lifespan=lifespan,
 )
 

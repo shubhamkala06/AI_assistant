@@ -3,18 +3,26 @@ from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Settings(BaseSettings):
-    app_name: str = "AI Assistant"
-    environment: str = "development"
-    debug: bool = True
+class AppSettings(BaseSettings):
+    app_name: str
+    environment: str
+    debug: bool = False
+
+    model_config = SettingsConfigDict(env_prefix="", extra="ignore", env_file=".env")
+
+
+class LoggingSettings(BaseSettings):
     log_level: str = "INFO"
 
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        extra="ignore",
-    )
+    model_config = SettingsConfigDict(env_prefix="", extra="ignore", env_file=".env")
+
+
+class Settings:
+    def __init__(self) -> None:
+        self.app = AppSettings()
+        self.logging = LoggingSettings()
 
 
 @lru_cache
-def get_settings():
+def get_settings() -> Settings:
     return Settings()
