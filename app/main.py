@@ -2,9 +2,9 @@ from fastapi import FastAPI
 
 from app.api.router import api_router
 from app.core.config import get_settings
-from app.core.exception_handlers import register_exception_handlers
+from app.core.exceptions.exception_handlers import register_exception_handlers
 from app.core.lifespan import lifespan
-from app.core.logging import configure_logging
+from app.core.observability.logging import configure_logging
 
 settings = get_settings()
 

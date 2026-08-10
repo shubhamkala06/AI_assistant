@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC
 from typing import Any, ClassVar
 
-from app.core.error_codes import CoreErrorCode
+from app.core.exceptions.error_codes import CoreErrorCode
 
 
 class ApplicationException(Exception, ABC):

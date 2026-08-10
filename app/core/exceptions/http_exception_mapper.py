@@ -5,7 +5,7 @@ from http import HTTPStatus
 #     UserInactive,
 #     UserNotFound,
 # )
-from app.core.exceptions import (
+from app.core.exceptions.exceptions import (
     ApplicationException,
     ConfigurationError,
     DependencyUnavailable,

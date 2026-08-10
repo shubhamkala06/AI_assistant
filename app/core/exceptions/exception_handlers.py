@@ -8,14 +8,14 @@ from app.api.schemas.error import (
     ValidationErrorDetail,
     ValidationErrorResponse,
 )
-from app.core.error_codes import CoreErrorCode
-from app.core.exceptions import (
+from app.core.exceptions.error_codes import CoreErrorCode
+from app.core.exceptions.exceptions import (
     ApplicationException,
     InternalServerError,
     SystemError,
     ValidationError,
 )
-from app.core.http_exception_mapper import get_http_status
+from app.core.exceptions.http_exception_mapper import get_http_status
 
 logger = structlog.get_logger(__name__)
 

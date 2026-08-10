@@ -3,8 +3,8 @@ from unittest.mock import Mock
 import pytest
 from fastapi import FastAPI, Request
 
-from app.core.exception_handlers import register_exception_handlers
-from app.core.exceptions import ApplicationException, InternalServerError
+from app.core.exceptions.exception_handlers import register_exception_handlers
+from app.core.exceptions.exceptions import ApplicationException, InternalServerError
 
 
 @pytest.mark.asyncio

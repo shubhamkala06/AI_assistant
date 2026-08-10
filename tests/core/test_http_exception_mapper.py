@@ -1,5 +1,5 @@
-from app.core.exceptions import ResourceNotFoundError
-from app.core.http_exception_mapper import get_http_status
+from app.core.exceptions.exceptions import ResourceNotFoundError
+from app.core.exceptions.http_exception_mapper import get_http_status
 
 
 class DummyNotFound(ResourceNotFoundError):
