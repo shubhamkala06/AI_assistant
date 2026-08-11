@@ -1,13 +1,31 @@
 import logging
 import sys
+from typing import Any
 
 import structlog
+from asgi_correlation_id import correlation_id
 
 from app.core.config import Settings
 
 
+def add_correlation_id(
+    logger: Any,
+    method_name: str,
+    event_dict: dict[str, Any],
+) -> dict[str, Any]:
+    """
+    Add the current request ID to every log event.
+    """
+
+    if request_id := correlation_id.get():
+        event_dict["request_id"] = request_id
+
+    return event_dict
+
+
 def configure_logging(settings: Settings) -> None:
     shared_processors = [
+        add_correlation_id,
         structlog.contextvars.merge_contextvars,
         structlog.stdlib.add_logger_name,
         structlog.stdlib.add_log_level,
