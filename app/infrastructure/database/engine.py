@@ -57,11 +57,36 @@ async def dispose_database() -> None:
     logger.info("Database engine disposed.")
 
 
+# async def _verify_connection(
+#     connection: AsyncConnection,
+# ) -> None:
+#     """
+#     Execute a lightweight query to verify connectivity.
+#     """
+
+#     await connection.execute(text("SELECT 1"))
+
+
 async def _verify_connection(
     connection: AsyncConnection,
 ) -> None:
     """
-    Execute a lightweight query to verify connectivity.
+    Verify connectivity and print all database tables.
     """
 
-    await connection.execute(text("SELECT 1"))
+    result = await connection.execute(
+        text(
+            """
+            SELECT tablename
+            FROM pg_catalog.pg_tables
+            WHERE schemaname = 'public'
+            ORDER BY tablename
+            """
+        )
+    )
+
+    tables = result.scalars().all()
+
+    print("Database tables:")
+    for table in tables:
+        print(f"  - {table}")
