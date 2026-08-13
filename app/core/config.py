@@ -48,11 +48,28 @@ class DatabaseSettings(BaseSettings):
         )
 
 
+class AuthSettings(BaseSettings):
+    reset_password_token_secret: str
+    verification_token_secret: str
+
+    access_token_lifetime_seconds: int = 3600
+    cookie_name: str = "auth"
+    cookie_secure: bool = False
+    cookie_samesite: str = "lax"
+
+    model_config = SettingsConfigDict(
+        env_prefix="AUTH_",
+        extra="ignore",
+        env_file=".env",
+    )
+
+
 class Settings:
     def __init__(self) -> None:
         self.app = AppSettings()
         self.logging = LoggingSettings()
         self.database = DatabaseSettings()
+        self.auth = AuthSettings()
 
 
 @lru_cache
