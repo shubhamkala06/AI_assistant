@@ -58,8 +58,3 @@ async def logout_everywhere(
     await service.logout_everywhere(user.id)
 
     return Response(status_code=status.HTTP_204_NO_CONTENT)
-
-
-@router.get("/oauth-success")
-async def oauth_success() -> dict[str, str]:
-    return {"message": "Google authentication successful"}
