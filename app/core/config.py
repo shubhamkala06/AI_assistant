@@ -1,4 +1,5 @@
 from functools import lru_cache
+from urllib.parse import quote_plus
 
 from pydantic import Field, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -30,22 +31,31 @@ class DatabaseSettings(BaseSettings):
     password: str
 
     echo: bool = False
-
     pool_pre_ping: bool = True
 
     model_config = SettingsConfigDict(
-        env_prefix="POSTGRES_", extra="ignore", env_file=".env"
+        env_prefix="POSTGRES_",
+        extra="ignore",
+        env_file=".env",
     )
 
     @computed_field
     @property
-    def url(self) -> str:
+    def asyncpg_url(self) -> str:
         return (
             f"{self.driver}://"
             f"{self.user}:{self.password}"
             f"@{self.host}:{self.port}"
             f"/{self.database}"
         )
+
+    @computed_field
+    @property
+    def psycopg_url(self) -> str:
+        user = quote_plus(self.user)
+        password = quote_plus(self.password)
+
+        return f"postgresql://{user}:{password}@{self.host}:{self.port}/{self.database}"
 
 
 class AuthSettings(BaseSettings):

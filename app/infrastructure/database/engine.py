@@ -13,7 +13,7 @@ logger = structlog.get_logger(__name__)
 settings = get_settings()
 
 primary_engine: AsyncEngine = create_async_engine(
-    settings.database.url,
+    settings.database.asyncpg_url,
     echo=settings.database.echo,
     pool_pre_ping=True,
 )
