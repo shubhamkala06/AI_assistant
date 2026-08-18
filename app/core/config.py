@@ -52,6 +52,10 @@ class AuthSettings(BaseSettings):
     reset_password_token_secret: str
     verification_token_secret: str
 
+    google_client_id: str
+    google_client_secret: str
+    oauth_state_secret: str
+
     access_token_lifetime_seconds: int = 3600
     cookie_name: str = "auth"
     cookie_secure: bool = False
