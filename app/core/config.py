@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Literal
 from urllib.parse import quote_plus
 
 from pydantic import Field, computed_field
@@ -79,6 +80,8 @@ class AuthSettings(BaseSettings):
 
 
 class AISettings(BaseSettings):
+    provider: Literal["google", "openai"] = "google"
+
     openai_api_key: str | None = None
     openai_chat_model: str | None = None
     openai_embedding_model: str | None = None
