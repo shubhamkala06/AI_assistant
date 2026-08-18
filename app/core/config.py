@@ -90,6 +90,8 @@ class AISettings(BaseSettings):
     gemini_chat_model: str | None = None
     gemini_embedding_model: str | None = None
 
+    tavily_api_key: str | None = None
+
     model_config = SettingsConfigDict(
         env_prefix="AI_",
         extra="ignore",
