@@ -78,12 +78,29 @@ class AuthSettings(BaseSettings):
     )
 
 
+class AISettings(BaseSettings):
+    openai_api_key: str | None = None
+    openai_chat_model: str | None = None
+    openai_embedding_model: str | None = None
+
+    google_api_key: str | None = None
+    gemini_chat_model: str | None = None
+    gemini_embedding_model: str | None = None
+
+    model_config = SettingsConfigDict(
+        env_prefix="AI_",
+        extra="ignore",
+        env_file=".env",
+    )
+
+
 class Settings:
     def __init__(self) -> None:
         self.app = AppSettings()
         self.logging = LoggingSettings()
         self.database = DatabaseSettings()
         self.auth = AuthSettings()
+        self.ai = AISettings()
 
 
 @lru_cache
