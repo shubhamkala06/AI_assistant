@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from uuid import UUID
 
 from sqlalchemy import select
@@ -33,3 +34,30 @@ class ConversationRepository:
         )
 
         return result.scalar_one_or_none()
+
+    async def list_by_user(
+        self,
+        user_id: UUID,
+    ) -> list[Conversation]:
+        result = await self.session.execute(
+            select(Conversation)
+            .where(Conversation.user_id == user_id)
+            .order_by(Conversation.updated_at.desc())
+        )
+
+        return list(result.scalars().all())
+
+    async def touch(self, conversation: Conversation) -> Conversation:
+        await self.session.commit()
+        await self.session.refresh(conversation)
+
+        return conversation
+
+
+async def touch(self, conversation: Conversation) -> Conversation:
+    conversation.updated_at = datetime.now(UTC)
+
+    await self.session.commit()
+    await self.session.refresh(conversation)
+
+    return conversation

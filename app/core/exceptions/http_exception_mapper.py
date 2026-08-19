@@ -1,10 +1,5 @@
 from http import HTTPStatus
 
-# from app.domains.users.exceptions import (
-#     UserAlreadyExists,
-#     UserInactive,
-#     UserNotFound,
-# )
 from app.core.exceptions.exceptions import (
     ApplicationException,
     ConfigurationError,
@@ -14,27 +9,26 @@ from app.core.exceptions.exceptions import (
 )
 
 HTTP_STATUS_MAPPING: dict[type[ApplicationException], HTTPStatus] = {
-    #
-    # Core
-    #
     ValidationError: HTTPStatus.BAD_REQUEST,
     DependencyUnavailable: HTTPStatus.SERVICE_UNAVAILABLE,
     ConfigurationError: HTTPStatus.INTERNAL_SERVER_ERROR,
     InternalServerError: HTTPStatus.INTERNAL_SERVER_ERROR,
-    #
-    # Users
-    #
-    # UserNotFound: HTTPStatus.NOT_FOUND,
-    # UserAlreadyExists: HTTPStatus.CONFLICT,
-    # UserInactive: HTTPStatus.FORBIDDEN,
 }
 
 
-def get_http_status(exc: ApplicationException) -> HTTPStatus:
-    """
-    Returns the HTTP status code corresponding to an application exception.
-    """
+def register_exception_status(
+    exception_cls: type[ApplicationException],
+    http_status: HTTPStatus,
+) -> None:
+    if exception_cls in HTTP_STATUS_MAPPING:
+        raise RuntimeError(
+            f"HTTP status mapping already registered for '{exception_cls.__name__}'."
+        )
 
+    HTTP_STATUS_MAPPING[exception_cls] = http_status
+
+
+def get_http_status(exc: ApplicationException) -> HTTPStatus:
     try:
         return HTTP_STATUS_MAPPING[type(exc)]
     except KeyError as e:
